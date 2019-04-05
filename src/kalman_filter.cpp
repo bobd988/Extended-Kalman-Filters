@@ -58,35 +58,25 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     float vx = x_(2);
     float vy = x_(3);
 
-    float eq1 = sqrt(px * px + py * py);
-    //check division by zero
-    if(eq1 < .00001) {
-      px += .001;
-      py += .001;
-      eq1 = sqrt(px * px + py * py);
-    }
-    float eq2 = atan2(py,px);
-    float eq3 = (px*vx+py*vy)/eq1;
-
-    //Feed in equations above
-    VectorXd H_func(3);
-    H_func << eq1, eq2, eq3;
-
-    VectorXd y = z - H_func;
-    // Normalize the angle
-    while (y(1)>M_PI) {
-	    y(1) -= 2 * M_PI;
-	  }
-    while (y(1)<-M_PI) {
-	    y(1) += 2 * M_PI;
-    }
+    double rho = sqrt(px*px + py*py);
+    double theta = atan2(py, px);
+    double rho_dot = (px*vx + py*vy) / rho;
+    VectorXd h = VectorXd(3);
+    h << rho, theta, rho_dot;
+    VectorXd y = z - h;
+    while ( y(1) > M_PI || y(1) < -M_PI ) {
+      if ( y(1) > M_PI ) {
+          y(1) -= M_PI;
+        } else {
+          y(1) += M_PI;
+        }
+      }
 
     MatrixXd Ht = H_.transpose();
     MatrixXd S = H_ * P_ * Ht + R_;
     MatrixXd Si = S.inverse();
-    MatrixXd PHt = P_ * Ht;
-    MatrixXd K = PHt * Si;
-    //new estimate
+    MatrixXd K = P_ * Ht * Si;
+    //new state
     x_ = x_ + (K * y);
     long x_size = x_.size();
     MatrixXd I = MatrixXd::Identity(x_size, x_size);

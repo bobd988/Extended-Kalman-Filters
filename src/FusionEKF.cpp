@@ -78,21 +78,33 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
     if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
       // TODO: Convert radar from polar to cartesian coordinates 
-       double rho = measurement_pack.raw_measurements_(0);
-       double phi = measurement_pack.raw_measurements_(1);
-       double rhodot = measurement_pack.raw_measurements_(2);
 
-       // polar to cartesian - r * cos(angle) for x and r * sin(angle) for y
-       ekf_.x_ << rho * cos(phi), rho * sin(phi), rhodot * cos(phi), rhodot * sin(phi);
-
+    	double rho = measurement_pack.raw_measurements_[0]; // range
+    	double phi = measurement_pack.raw_measurements_[1]; // bearing
+    	double rho_dot = measurement_pack.raw_measurements_[2]; // velocity of rho
+    	cout << "EKF : Measurement RADAR" << endl;
+    	// Coordinates convertion from polar to cartesian
+    	double x = rho * cos(phi);
+    	if ( x < 0.0001 ) {
+    	        x = 0.0001;
+    	 }
+    	double y = rho * sin(phi);
+    	if ( y < 0.0001 ) {
+    	        y = 0.0001;
+    	 }
+    	double vx = rho_dot * cos(phi);
+    	double vy = rho_dot * sin(phi);
+    	ekf_.x_ << x, y, vx , vy;
 
     }
     else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
       // TODO: Initialize state.
-    	ekf_.x_ << measurement_pack.raw_measurements_(0), measurement_pack.raw_measurements_(1), 0.0, 0.0;
-    }
+        cout << "EKF : Measurement LASER" << endl;
+        ekf_.x_ << measurement_pack.raw_measurements_[0], measurement_pack.raw_measurements_[1], 0, 0;
+         }
 
     // done initializing, no need to predict or update
+    previous_timestamp_ = measurement_pack.timestamp_ ;
     is_initialized_ = true;
     return;
   }
@@ -107,26 +119,32 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
    * TODO: Update the process noise covariance matrix.
    * Use noise_ax = 9 and noise_ay = 9 for your Q matrix.
    */
-  float dt = (measurement_pack.timestamp_ - previous_timestamp_) / 1000000.0;	//dt - expressed in seconds
+  float dt = (measurement_pack.timestamp_ - previous_timestamp_) / 1000000.0;
   previous_timestamp_ = measurement_pack.timestamp_;
+  // State transition matrix update
+  ekf_.F_ = MatrixXd(4, 4);
+  ekf_.F_ << 1, 0, dt, 0,
+              0, 1, 0, dt,
+              0, 0, 1, 0,
+              0, 0, 0, 1;
 
-  float dt_2 = dt * dt;
-  float dt_3 = dt_2 * dt;
-  float dt_4 = dt_3 * dt;
+   // Noise covariance matrix computation
+   // Noise values from the task
+  double noise_ax = 9.0;
+  double noise_ay = 9.0;
 
-  //Modify the F matrix so that the time is integrated
-  ekf_.F_(0, 2) = dt;
-  ekf_.F_(1, 3) = dt;
-
-   //process noise
-  float noise_ax = 9;
-  float noise_ay = 9;
-
+  double dt_2 = dt * dt; //dt^2
+  double dt_3 = dt_2 * dt; //dt^3
+  double dt_4 = dt_3 * dt; //dt^4
+  double dt_4_4 = dt_4 / 4; //dt^4/4
+  double dt_3_2 = dt_3 / 2; //dt^3/2
   ekf_.Q_ = MatrixXd(4, 4);
-  ekf_.Q_ << dt_4/4*noise_ax, 0, dt_3/2*noise_ax, 0,
-             0, dt_4/4*noise_ay, 0, dt_3/2*noise_ay,
-             dt_3/2*noise_ax, 0, dt_2*noise_ax, 0,
-             0, dt_3/2*noise_ay, 0, dt_2*noise_ay;
+  ekf_.Q_ << dt_4_4 * noise_ax, 0, dt_3_2 * noise_ax, 0,
+  	         0, dt_4_4 * noise_ay, 0, dt_3_2 * noise_ay,
+  	         dt_3_2 * noise_ax, 0, dt_2 * noise_ax, 0,
+   	         0, dt_3_2 * noise_ay, 0, dt_2 * noise_ay;
+
+
   ekf_.Predict();
 
   /**
