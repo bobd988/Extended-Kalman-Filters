@@ -17,7 +17,6 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
 	VectorXd rmse(4);
 	rmse << 0,0,0,0;
 
-	//accumulate squared residuals
 	for(unsigned int i=0; i < estimations.size(); ++i){
 		VectorXd residuals = estimations[i] - ground_truth[i];
 	    residuals = residuals.array() * residuals.array();
@@ -26,11 +25,8 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
 
 	//calculate the mean
 	rmse = rmse / estimations.size();
-
 	//calculate the squared root
     rmse = sqrt(rmse.array());
-
-	  //return the result
 	return rmse;
 }
 
@@ -48,7 +44,6 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
     float vx = x_state(2);
     float vy = x_state(3);
 
-	// Some re-used equations for matrix below
 	float c1 = px * px + py * py;
 	//check division by zero
     if(c1 < .00001) {
@@ -64,6 +59,6 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
 	        -py/c1, px/c1, 0, 0,
 	        (py*(vx*py - vy*px))/c3, (px*(vy*px - vx*py))/c3, px/c2, py/c2;
 
-	  //return the matrix
+	//return the matrix
 	return Hj;
 }

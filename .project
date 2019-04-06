@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>ExtendedKF-Debug@Extended-Kalman-Filters-github</name>
+	<name>ExtendedKF-Debug@Extended-Kalman-Filter-github</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -31,7 +31,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.build.location</key>
-					<value>/home/bobding/disk1t/SynologyDrive/Udacity-SD-nano/Extended-Kalman-Filters-github</value>
+					<value>/home/demo/disk512/SynologyDrive/Udacity-SD-nano/Extended-Kalman-Filter-github</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.build.target.auto</key>
@@ -51,7 +51,7 @@
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>/home/bobding/disk1t/SynologyDrive/Udacity-SD-nano/Extended-Kalman-Filters-github</value>
+					<value>/home/demo/disk512/SynologyDrive/Udacity-SD-nano/Extended-Kalman-Filter-github</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.cleanBuildTarget</key>
@@ -139,11 +139,6 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>[Targets]/[exe] ExtendedKF/Object Libraries</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>[Targets]/[exe] ExtendedKF/Resources</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -156,37 +151,37 @@
 		<link>
 			<name>[Targets]/[exe] ExtendedKF/Header Files/FusionEKF.h</name>
 			<type>1</type>
-			<location>/home/bobding/disk1t/SynologyDrive/Udacity-SD-nano/Extended-Kalman-Filters-github/src/FusionEKF.h</location>
+			<location>/home/demo/disk512/SynologyDrive/Udacity-SD-nano/Extended-Kalman-Filter-github/src/FusionEKF.h</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] ExtendedKF/Header Files/kalman_filter.h</name>
 			<type>1</type>
-			<location>/home/bobding/disk1t/SynologyDrive/Udacity-SD-nano/Extended-Kalman-Filters-github/src/kalman_filter.h</location>
+			<location>/home/demo/disk512/SynologyDrive/Udacity-SD-nano/Extended-Kalman-Filter-github/src/kalman_filter.h</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] ExtendedKF/Header Files/tools.h</name>
 			<type>1</type>
-			<location>/home/bobding/disk1t/SynologyDrive/Udacity-SD-nano/Extended-Kalman-Filters-github/src/tools.h</location>
+			<location>/home/demo/disk512/SynologyDrive/Udacity-SD-nano/Extended-Kalman-Filter-github/src/tools.h</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] ExtendedKF/Source Files/FusionEKF.cpp</name>
 			<type>1</type>
-			<location>/home/bobding/disk1t/SynologyDrive/Udacity-SD-nano/Extended-Kalman-Filters-github/src/FusionEKF.cpp</location>
+			<location>/home/demo/disk512/SynologyDrive/Udacity-SD-nano/Extended-Kalman-Filter-github/src/FusionEKF.cpp</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] ExtendedKF/Source Files/kalman_filter.cpp</name>
 			<type>1</type>
-			<location>/home/bobding/disk1t/SynologyDrive/Udacity-SD-nano/Extended-Kalman-Filters-github/src/kalman_filter.cpp</location>
+			<location>/home/demo/disk512/SynologyDrive/Udacity-SD-nano/Extended-Kalman-Filter-github/src/kalman_filter.cpp</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] ExtendedKF/Source Files/main.cpp</name>
 			<type>1</type>
-			<location>/home/bobding/disk1t/SynologyDrive/Udacity-SD-nano/Extended-Kalman-Filters-github/src/main.cpp</location>
+			<location>/home/demo/disk512/SynologyDrive/Udacity-SD-nano/Extended-Kalman-Filter-github/src/main.cpp</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] ExtendedKF/Source Files/tools.cpp</name>
 			<type>1</type>
-			<location>/home/bobding/disk1t/SynologyDrive/Udacity-SD-nano/Extended-Kalman-Filters-github/src/tools.cpp</location>
+			<location>/home/demo/disk512/SynologyDrive/Udacity-SD-nano/Extended-Kalman-Filter-github/src/tools.cpp</location>
 		</link>
 	</linkedResources>
 </projectDescription>

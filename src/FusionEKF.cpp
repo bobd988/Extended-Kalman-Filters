@@ -83,7 +83,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     	double phi = measurement_pack.raw_measurements_[1]; // bearing
     	double rho_dot = measurement_pack.raw_measurements_[2]; // velocity of rho
     	cout << "EKF : Measurement RADAR" << endl;
-    	// Coordinates convertion from polar to cartesian
+    	// Coordinates from polar to cartesian
     	double x = rho * cos(phi);
     	if ( x < 0.0001 ) {
     	        x = 0.0001;
@@ -103,7 +103,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
         ekf_.x_ << measurement_pack.raw_measurements_[0], measurement_pack.raw_measurements_[1], 0, 0;
          }
 
-    // done initializing, no need to predict or update
+    // first initializing skip predict or update
     previous_timestamp_ = measurement_pack.timestamp_ ;
     is_initialized_ = true;
     return;
@@ -128,8 +128,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
               0, 0, 1, 0,
               0, 0, 0, 1;
 
-   // Noise covariance matrix computation
-   // Noise values from the task
+  // Noise covariance matrix computation
+  // Noise values from the task
   double noise_ax = 9.0;
   double noise_ay = 9.0;
 
